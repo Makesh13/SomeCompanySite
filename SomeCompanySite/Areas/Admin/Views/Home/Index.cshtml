@@ -11,20 +11,21 @@
         <div class="div-container">
             <a asp-area="Admin" asp-controller="ServiceItems" asp-action="Edit" asp-route-id="">Добавить услугу</a>
         </div>
+        |
         @if (Model.Any())
         {
             <div>
                 @foreach (ServiceItem entity in Model)
                 {
                     <div>
-                        <a asp-area="Admin" asp-controller="ServiceItems" asp-action="Edit" asp-route-id="@entity.Id">редактировать</a>
+                        <a asp-area="Admin" asp-controller="ServiceItems" asp-action="Edit" asp-route-id="@entity.Id">редактировать</a>|
                         
                         <form style="display: inline-block;" id="form-@entity.Id" asp-area="Admin" asp-controller="ServiceItems">
                             <input type="hidden" name="id" value="@entity.Id">
                             <a href="#" onclick="document.getElementById('form--@entity.Id').submit();">удалить</a>
                         </form>
-                        
-                        <a asp-area="" asp-controller="Services" asp-action="Index" asp-route-id="@entity.Id">
+                        <br>
+                        <a asp-area="" asp-controller="" asp-action="" asp-route-id="@entity.Id">
                             @($"{entity.Title}")
                         </a>
                     </div>

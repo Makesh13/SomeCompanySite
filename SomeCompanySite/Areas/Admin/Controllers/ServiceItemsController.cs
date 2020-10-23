@@ -12,6 +12,7 @@ using SomeCompanySite.Service;
 
 namespace SomeCompanySite.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class ServiceItemsController : Controller
     {
         private readonly DataManager dataManager;
@@ -30,7 +31,7 @@ namespace SomeCompanySite.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(ServiceItem model, IFormFile titleImageFile)
+        public IActionResult Edit(ServiceItem model, IFormFile titleImageFile)//IFormFile - Интерфейс позволяющий загружать картинки через Http
         {
             if (ModelState.IsValid)
             {
@@ -39,7 +40,7 @@ namespace SomeCompanySite.Areas.Admin.Controllers
                     model.TitleImagePath = titleImageFile.FileName;
                     using (var stream =
                         new FileStream(
-                            Path.Combine(hostingEnvironment.WebRootPath, "images/", titleImageFile.FileName),))
+                            Path.Combine(hostingEnvironment.WebRootPath, "images/", titleImageFile.FileName), FileMode.Create))
                     {
                         titleImageFile.CopyTo(stream);
                     }
@@ -50,9 +51,12 @@ namespace SomeCompanySite.Areas.Admin.Controllers
 
             return View(model);
         }
-        public IActionResult Index()
+
+        [HttpPost]
+        public IActionResult Delete(Guid id)
         {
-            return View();
+            dataManager.ServiceItems.DeleteServiceItem(id);
+            return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
         }
     }
 }
