@@ -1,1 +1,8 @@
-﻿!!!Sidebar
+﻿
+
+@*Будем делать с помощью вью компонентов.*@
+<div class="col-4 col-12-medium">
+    <cache>
+        @(await Component.InvokeAsync<SidebarViewComponent>())
+    </cache>
+</div>
